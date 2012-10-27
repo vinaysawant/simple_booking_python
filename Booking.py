@@ -10,7 +10,7 @@ def check_availability(facility,date,time_from,time_to):
         return 1
     else:
         for i in book_list:
-            if i[0]==facility and i[1]==date and ((time_from>=i[2] or time_from<=i[2]) and (time_to<=i[3] or time_to>=i[3])):
+            if i[0]==facility and i[1]==date and (i[2]<=time_from and i[3]>=time_from) or (i[2]<=time_to and i[3]>=time_to):
                 flag=0
             else:
                 flag=1
@@ -22,6 +22,7 @@ def check_availability(facility,date,time_from,time_to):
 
 #fnctiion books facility     
 def book_facility(facility,date,time_from,time_to):
+    global book_list
     book=[facility,date,time_from,time_to]
     rent=getrent(facility,time_from,time_to)
     book_time=time_to-time_from
@@ -34,6 +35,7 @@ def book_facility(facility,date,time_from,time_to):
         print "\t\tBooking Time ",book_time,
         print "hours"
         print "\t\tTotal payable amount is Rs.",total
+#       print book_list
     except:
         print "\tSome error ocurred while proccessing,please try agian..."
 
@@ -103,7 +105,7 @@ def start():
         date=facility[1]    
         time_f=convert(facility[2])
         time_t=convert(facility[3])
-
+ 
         if check_availability(facility_available,date,time_f,time_t):
             book_facility(facility_available,date,time_f,time_t)
 
